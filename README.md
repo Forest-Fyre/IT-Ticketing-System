@@ -7,7 +7,7 @@
 2. build the project file using ./gradlew build
 3. run the project using        ./gradlew Bootrun
 
-4. using http://localhost:8080/cXXXXXXX_cYYYYYYY_cZZZZZZZ_FinalProject/ to access the login page
+4. use http://localhost:8080 to access the login page
     (alternatively)   http://localhost:8080/login
 
 5. The existing users in database in username-password-role/s triples
