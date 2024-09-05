@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Report</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="nav__links">
+          <li><a href="/issues">Issues</a></li>
+          <li><a href="/KB.html">Knowledge Base</a></li>
+          <li class="active"><a href="/report">Report Issue</a></li>
+          <li><a href="/notifications.html">Notifications</a></li>
+          <li><a href="/login.html">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+    <h1>Report</h1>
+<div class="center">
+    <form class="reportForm">
+      <label for="title">Title</label>
+      <input requried type="text"></input>
+
+      <label for="categories">Categories</label>
+      <select requried type="select"><option>d</option></select>
+      <button>Add Category</button>
+
+      <label for="subCategories">Sub-Categories</label>
+      <select requried type="select"><option>d</option></select>
+      <button>Add Sub-Category</button>
+
+      <label for="description">Description</label>
+      <input requried type="textarea"></input>
+
+    </form></div>
+  </body>
+</html>

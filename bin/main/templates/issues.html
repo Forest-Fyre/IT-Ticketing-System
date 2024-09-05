@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Issue | TicketingSystem</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<header>
+    <nav>
+        <ul class="nav__links">
+            <li class="active"><a href="/issues">Issues</a></li>
+            <li><a href="/KB">Knowledge Base</a></li>
+            <li><a href="/report">Report Issue</a></li>
+            <li><a href="/notifications">Notifications</a></li>
+            <li><a href="/login.html">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+<h1>My Issues</h1>
+ <table border="1">
+        <thead>
+            <tr>
+                <th>Issue ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="Issue : ${issues}">
+                <td th:text="${Issue.issueID}"></td>
+                <td th:text="${Issue.title}"></td>
+                <td th:text="${Issue.description}"></td>
+                <td th:text="${Issue.status}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
