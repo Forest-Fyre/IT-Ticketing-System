@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Statistics | TicketingSystem</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="nav__links">
+          <li><a href="/issues">Issues</a></li>
+          <li th:if="${isManager || isIt}">
+            <a href="/ua_issues">Unassigned Issues</a>
+          </li>
+          <li th:if="${isIt}">
+            <a href="/a_issues">Assigned Issues</a>
+          </li>
+          <li><a href="/KB">Knowledge Base</a></li>
+          <li th:if="${isUser}">
+            <a href="/report">Report Issue</a>
+          </li>
+          <li><a href="/homepage">Home</a></li>
+          <li><a href="/notifications">Notifications</a></li>
+          <li class="active" th:if="${isManager}">
+            <a href="/statistics">Statistics</a>
+          </li>
+          <li><a href="/login">Logout</a></li>
+        </ul>
+      </nav>
+      <div class="loggedInAs" th:text="${username}"></div>
+    </header>
+    <div class="center">
+      <h1>Statistics Page</h1>
+      <h2>Number of Issues in Each Category</h2>
+      <ul>
+        <li>
+          Software :
+          <span th:text="${softwareNum != null ? softwareNum : 0}"></span>
+        </li>
+        <li>
+          Network :
+          <span th:text="${networkNum != null ? networkNum : 0}"></span>
+        </li>
+        <li>
+          hardware :
+          <span th:text="${hardwareNum != null ? hardwareNum : 0}"></span>
+        </li>
+        <li>
+          Email : <span th:text="${emailNum != null ? emailNum : 0}"></span>
+        </li>
+        <li>
+          Account :
+          <span th:text="${accountNum != null ? accountNum : 0}"></span>
+        </li>
+      </ul>
+      <hr />
+      <h2>Number of Issues in Each Status</h2>
+      <ul>
+        <li>New : <span th:text="${newNum != null ? newNum : 0}"></span></li>
+        <li>
+          In Progress :
+          <span th:text="${progressNum != null ? progressNum : 0}"></span>
+        </li>
+        <li>
+          Completed :
+          <span th:text="${completeNum != null ? completeNum : 0}"></span>
+        </li>
+        <li>
+          Resolved :
+          <span th:text="${resolvedNum != null ? resolvedNum : 0}"></span>
+        </li>
+        <li>
+          Waiting on Third Party :
+          <span th:text="${ThirdPNum != null ? ThirdPNum : 0}"></span>
+        </li>
+        <li>
+          Waiting on Reporter :
+          <span th:text="${reporterNum != null ? reporterNum : 0}"></span>
+        </li>
+      </ul>
+      <hr />
+      <h2>IT Staff Workload</h2>
+      <ul>
+        <li th:each="sCount : ${staffCounts}">
+          <a
+            th:text="'Username: ' + ${sCount.username} + ', current issue count: ' + ${sCount.count}"
+          ></a>
+        </li>
+      </ul>
+      <hr />
+      <h2>Knowledge Base Utilization</h2>
+      <ul>
+        <li>
+          <a
+            th:text="'Knowledge Base Views : ' + ${viewCount != null ?
+          viewCount : 0}"
+          ></a>
+        </li>
+      </ul>
+      <hr />
+      <h2>Average Issue Completion Time</h2>
+      <ul th:if="${avgTime >= 86400}">
+        <li
+          th:text="${#numbers.formatDecimal(avgTime / 86400, 2, 2)} + ' days'"
+        ></li>
+      </ul>
+      <ul th:if="${avgTime >= 3600} and ${avgTime < 86400}">
+        <li
+          th:text="${#numbers.formatDecimal(avgTime / 3600, 2, 2)} + ' hours'"
+        ></li>
+      </ul>
+      <ul th:if="${avgTime >= 60} and ${avgTime < 3600}">
+        <li
+          th:text="${#numbers.formatDecimal(avgTime / 60, 2, 2)} + ' minutes'"
+        ></li>
+      </ul>
+      <ul th:if="${avgTime < 60}">
+        <li
+          th:text="${#numbers.formatDecimal(avgTime, 2, 2)} + ' seconds'"
+        ></li>
+      </ul>
+      <hr />
+      <h2>Top 5 Longest Unresolved Issues</h2>
+      <div th:each="unCompletedIssue : ${unCompletedIssues}">
+        <ul>
+          <li th:text="'Issue Title: ' + ${unCompletedIssue.title}"></li>
+          <ul>
+            <li
+              th:text="'Date: ' + ${#dates.format(new java.util.Date(unCompletedIssue.date), 'yyyy-MM-dd')}"
+            ></li>
+            <li th:text="'Submitted by: ' + ${unCompletedIssue.username}"></li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+    <hr />
+  </body>
+</html>

@@ -1,0 +1,293 @@
+body {
+  background-color: #f4faff;
+  margin: 0px;
+}
+
+h1 {
+  color: rgb(0, 0, 0);
+  display: block;
+  width: 100%;
+}
+
+.mb-1 {
+  margin-bottom: 1em;
+}
+
+.mb-2 {
+  margin-bottom: 1.5em;
+}
+
+.mb-3 {
+  margin-bottom: 2em;
+}
+
+.mt-1 {
+  margin-top: 1em;
+}
+
+.mt-2 {
+  margin-top: 1.5em;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+nav {
+  margin-right: auto;
+  margin-left: auto;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  height: 30px;
+  font-size: 24px;
+}
+
+.nav__links {
+  margin: 0px;
+  list-style: none;
+}
+
+.nav__links li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.nav__links li a {
+  transition: all 0.3s ease 0s;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.nav__links li a:hover {
+  color: #b7adcf;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 9px 30px;
+  background-color: rgb(177, 185, 218);
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease 0s;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background-color: #b7adcf; /* colour of button when hovered */
+}
+
+header {
+  background-color: #4f646f; /* colour of button when hovered */
+}
+
+.reportForm {
+  display: block;
+  align-items: center;
+}
+
+.reportForm label {
+  font-size: 18px;
+}
+
+.reportForm input,
+label,
+select,
+textarea {
+  display: block;
+  width: 100%;
+}
+
+.reportForm input,
+select,
+textarea {
+  border-radius: 5px;
+  width: 100%;
+  height: 25px;
+}
+
+.reportForm select,
+textarea {
+  border-width: 3px;
+  width: 100%;
+}
+.reportForm select {
+  height: 85px;
+}
+
+.reportForm textarea {
+  height: 100px;
+  resize: none;
+}
+
+.reportForm [type="submit"],
+input[type="reset"] {
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: rgb(129, 134, 156);
+  border-radius: 25px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease 0s;
+}
+
+.reportForm input[type="submit"] {
+  background-color: rgb(39, 212, 114);
+}
+
+.reportForm input[type="reset"] {
+  background-color: rgb(212, 39, 48);
+}
+
+.center {
+  max-width: 50%;
+  margin: auto;
+  /* display: flex;
+  justify-content: center; */
+}
+
+.active a {
+  color: #cfb1cb !important;
+}
+
+.spacebetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.issues {
+  padding: 5px;
+}
+
+.issues div {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #cbc2c2;
+}
+
+.highlight {
+  background-color: yellow;
+}
+
+.addComment textarea {
+  resize: none;
+  height: 50px;
+  width: 80%;
+}
+
+.w-25 {
+  width: 25%;
+}
+.w-50 {
+  width: 50%;
+}
+.w-75 {
+  width: 75%;
+}
+
+.w-100 {
+  width: 100%;
+  max-width: 100%;
+  margin: 0px;
+}
+
+.login input {
+  font-size: 20;
+}
+
+.login {
+  font-size: 22;
+  margin-top: 20px;
+  background-color: #e9f0f7;
+  box-shadow: 5px 5px 10px #f5f0f0;
+  padding: 30px;
+}
+.login p {
+  display: inline-block;
+}
+.mt-0 {
+  margin-top: 0;
+}
+.login form {
+  padding: 25px;
+}
+
+.flex {
+  display: flex;
+}
+.right {
+  margin-left: auto !important;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+}
+.flex-container p {
+  margin: 0;
+}
+
+button:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
+  transition: 0ms;
+  background-color: #4f646f;
+}
+
+.nav__links li a:active {
+  transition: 0ms;
+  color: #59859c;
+}
+
+.highlight {
+  border: 2px solid yellow;
+  padding: 5px;
+  background-color: #ffffcc;
+}
+
+.sameLine {
+  display: flex;
+}
+
+.floatRight {
+  float: right;
+}
+.mr-0 {
+  margin-right: 0px !important;
+}
+.ml-0 {
+  margin-left: 0px;
+}
+
+.red {
+  background-color: rgb(160, 24, 24);
+}
+
+.green {
+  background-color: #19b253;
+}
+
+.sameLine p {
+  display: inline;
+  align-self: flex-start;
+}
+.sameLine a {
+  display: block;
+  align-self: flex-start;
+}
+
+.loggedInAs {
+  display: inline;
+  float: right;
+}

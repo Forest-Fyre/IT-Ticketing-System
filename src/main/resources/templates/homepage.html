@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home | TicketSystem</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="nav__links">
+          <li><a href="/issues">Issues</a></li>
+          <li th:if="${isManager || isIt}">
+            <a href="/ua_issues">Unassigned Issues</a>
+          </li>
+          <li th:if="${isIt}">
+            <a href="/a_issues">Assigned Issues</a>
+          </li>
+          <li><a href="/KB">Knowledge Base</a></li>
+          <li th:if="${isUser}">
+            <a href="/report">Report Issue</a>
+          </li>
+          <li class="active"><a href="/homepage">Home</a></li>
+          <li><a href="/notifications">Notifications</a></li>
+          <li th:if="${isManager}">
+            <a href="/statistics">Statistics</a>
+          </li>
+          <li><a href="/login">Logout</a></li>
+        </ul>
+      </nav>
+      <div class="loggedInAs" th:text="${username}"></div>
+    </header>
+
+    <div class="center">
+      <h1>Home</h1>
+      <h2>Welcome, <span th:text="${username}"></span>!</h2>
+      <div class="sameLine">
+        <div class="w-50">
+          <a href="/notifications">Notifications</a>
+          <div th:if="${notiList.isEmpty()}" class="mt-1">
+            No notifications available.
+          </div>
+          <div th:unless="${notiList.isEmpty()}">
+            <div class="sameLine mt-1">
+              <div class="w-25">Date:</div>
+              <div class="w-75">Message:</div>
+            </div>
+            <div th:each="notification : ${notiList}" class="sameLine mt-1">
+              <div th:text="${notification.date}" class="w-25"></div>
+              <div th:text="${notification.message}" class="w-75"></div>
+              <div>
+                <form action="/mark_seen" method="post">
+                  <input type="hidden" th:name="notificationID" th:value="${notification.notificationID}" />
+                  <button type="submit">Seen</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-50">
+          <a href="/issues">Issues</a>
+          <div th:if="${issueList.isEmpty()}" class="mt-1">No Issues</div>
+          <div th:unless="${issueList.isEmpty()}">
+            <div class="mt-1" th:each="issue : ${issueList}">
+              <p th:text="${issue.date}"></p>
+              <p th:text="' : '+ ${issue.title} + ': '"></p>
+              <p th:text="${issue.status}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sameLine mt-1">
+        <div class="w-50">
+          <a class="mb-1" href="/KB">Knowledge Base</a>
+          <p>
+            Looking for answers? Stuck? About to smash your computer? Look no
+            further than the University of Newcastle's comprehensive Knowledge
+            Base. Here you can find all the answers to your burning Software,
+            Hardware, Email, Network and Account related Issues
+          </p>
+        </div>
+        <div class="w-50">
+          <a class="mb-1" href="/report">Report Issue</a>
+          <p>
+            Can't find an answer in our Knowledge Base? Don't worry! Simply send
+            in a report, and one of our dedicated IT staff members will work
+            tirelessly to resolve that dreaded problem. Our experienced staff
+            are trained in a variety of fields and will have no problem
+            addressing any type of IT-related questions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

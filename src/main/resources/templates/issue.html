@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Issue | TicketingSystem</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="nav__links">
+          <li class="active"><a href="/issues">Issues</a></li>
+          <li th:if="${isManager || isIt}">
+            <a href="/ua_issues">Unassigned Issues</a>
+          </li>
+          <li th:if="${isIt}">
+            <a href="/a_issues">Assigned Issues</a>
+          </li>
+          <li><a href="/KB">Knowledge Base</a></li>
+          <li th:if="${isUser}">
+            <a href="/report">Report Issue</a>
+          </li>
+          <li><a href="/homepage">Home</a></li>
+          <li><a href="/notifications">Notifications</a></li>
+          <li th:if="${isManager}">
+            <a href="/statistics">Statistics</a>
+          </li>
+          <li><a href="/login">Logout</a></li>
+        </ul>
+      </nav>
+      <div class="loggedInAs" th:text="${username}"></div>
+    </header>
+
+    <div class="center">
+      <h1>Issue Details</h1>
+      <h2><span th:text="${roles}"></span></h2>
+
+      <div class="issues">
+        <p th:text="${issue.title}"></p>
+        <p th:text="'Submitted By: ' + ${issue.username}"></p>
+        <p th:text="'Status: ' + ${issue.status}"></p>
+        <p th:text="'Issue ID: ' + ${issue.issueID}"></p>
+        <p
+          th:text="'Date: ' + ${#dates.format(new java.util.Date(issue.date), 'yyyy-MM-dd')}"
+        ></p>
+        <div th:text="${issue.description}"></div>
+      </div>
+
+      <div
+        class="mb-2 mt-1 spacebetween"
+        th:if="${isUser && issue.status == 'Completed' && signedinUsername == issue.username}"
+      >
+        <form class="addComment" action="/rejectSolution" method="POST">
+          <input
+            type="hidden"
+            name="issueID"
+            id="issueID"
+            th:value="${issue.issueID}"
+          />
+          <button class="mr-0 ml-0 red" type="submit">Reject Solution</button>
+        </form>
+        <form class="addComment" action="/acceptSolution" method="POST">
+          <input
+            type="hidden"
+            name="issueID"
+            id="issueID"
+            th:value="${issue.issueID}"
+          />
+
+          <button
+            class="mr-0 ml-0 green"
+            style="margin-right: 0px"
+            type="submit"
+          >
+            Accept Solution
+          </button>
+        </form>
+      </div>
+
+      <form
+        th:if="${isIt && issue.status != 'New' && issue.status != 'Completed' && issue.status != 'Resolved' && issue.status != 'resolved' && isAssigned}"
+        class="addComment mb-2 mt-1"
+        action="/completeStatus"
+        method="POST"
+      >
+        <input
+          type="hidden"
+          name="issueID"
+          id="issueID"
+          th:value="${issue.issueID}"
+        />
+        <button class="mr-0 ml-0 green" type="submit">Mark Completed</button>
+      </form>
+      <h2 class="mt-2">Category Information</h2>
+
+      <div th:each="category : ${categories}" class="category">
+        <div th:text="${category.category}"></div>
+        <ul class="subcategories">
+          <li
+            th:each="subCategory : ${subCategories}"
+            th:if="${subCategory.categoryID} == ${category.categoryID}"
+          >
+            <span th:text="${subCategory.subCategory}"></span>
+          </li>
+        </ul>
+      </div>
+
+      <form
+        th:if="${isManager && issue.status == 'New'}"
+        class="addComment"
+        action="/assignStaff"
+        method="post"
+      >
+        <label for="username" class="mt-1">Assign Staff to Issue</label>
+        <div class="spacebetween">
+          <select required id="username" name="username">
+            <option
+              th:each="staff : ${unassignedStaff}"
+              th:value="${staff}"
+              th:text="${staff}"
+            ></option>
+          </select>
+          <input class="mr-0 floatRight" type="submit" value="Assign" />
+        </div>
+      </form>
+
+      <form
+        th:if="${isIt && issue.status == 'New'}"
+        class="addComment mt-2"
+        action="/selfAssign"
+        method="post"
+      >
+        <button class="ml-0">Self Assign</button>
+      </form>
+
+      <h2 class="mt-2">Comments</h2>
+      <div th:if="${issue.status != 'Resolved' && issue.status != 'resolved'}">
+        <form class="addComment" action="/issue" method="POST">
+          <label for="addComment">Add Comment:</label>
+          <div class="spacebetween">
+            <input
+              type="hidden"
+              name="issueID"
+              id="issueID"
+              th:value="${issue.issueID}"
+            />
+            <textarea name="addComment"></textarea>
+            <button style="margin-left: 20px; margin-right: 0px" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div>
+        <div th:each="comment : ${comments}">
+          <hr />
+          <div class="mb-2 mt-1" th:if="${isUser}">System User</div>
+          <div class="mb-2 mt-1" th:if="${isIt}">IT Staff</div>
+          <div class="mb-2 mt-1" th:if="${isManager}">It Manager</div>
+          <div
+            class="mb-2 mt-1"
+            th:text="'Username: ' + ${comment.username}"
+          ></div>
+          <div class="mb-2 mt-1" th:text="'Date: ' + ${comment.date}"></div>
+          <div class="sameLine">
+            <div
+              th:class="${comment.isHighlighted == 1 ? 'highlight mb-1 w-75' : 'mb-1 w-75'}"
+              th:text="${comment.commentData}"
+            ></div>
+            <form
+              class="w-25"
+              th:if="${isIt}"
+              method="post"
+              action="/highlightComment"
+            >
+              <input
+                type="hidden"
+                name="commentID"
+                th:value="${comment.commentID}"
+              />
+              <input
+                type="hidden"
+                name="isHighlighted"
+                th:value="${comment.isHighlighted}"
+              />
+              <button
+                class="floatRight mr-0"
+                th:text="${comment.isHighlighted == 1 ? 'Un-Highlight' : 'Highlight'}"
+              ></button>
+            </form>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </div>
+  </body>
+</html>

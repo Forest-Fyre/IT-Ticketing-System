@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Assigned Issues | TicketingSystem</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="nav__links">
+          <li><a href="/issues">Issues</a></li>
+          <li th:if="${isManager || isIt}">
+            <a href="/ua_issues">Unassigned Issues</a>
+          </li>
+          <li class="active" th:if="${isIt}">
+            <a href="/a_issues">Assigned Issues</a>
+          </li>
+          <li><a href="/KB">Knowledge Base</a></li>
+          <li th:if="${isUser}">
+            <a href="/report">Report Issue</a>
+          </li>
+          <li><a href="/homepage">Home</a></li>
+          <li><a href="/notifications">Notifications</a></li>
+          <li th:if="${isManager}">
+            <a href="/statistics">Statistics</a>
+          </li>
+          <li><a href="/login">Logout</a></li>
+        </ul>
+      </nav>
+      <div class="loggedInAs" th:text="${username}"></div>
+    </header>
+    <div class="center">
+      <div class="mb-2 mt-1">
+        <h1>Assigned Issues</h1>
+      </div>
+
+      <!-- <h2>Welcome, <span th:text="${username}"></span>!   <span th:text="${role}"></span></h2> -->
+      <form action="/a_issues" method="get">
+        <label for="titleFilter">Filter By Title:</label>
+        <input
+          type="text"
+          id="titleFilter"
+          name="titleFilter"
+          maxlength="100"
+          required
+        />
+        <button type="submit">Submit</button>
+      </form>
+
+      <div th:each="issue : ${a_issues}" class="issues">
+        <hr />
+        <a
+          th:href="'/issue?issueID=' + ${issue.issueID}"
+          th:text="${issue.title}"
+        ></a>
+        <p th:text="'Status: ' + ${issue.status}"></p>
+        <p th:text="'Issue ID: ' + ${issue.issueID}"></p>
+        <p
+          th:text="'Date: ' + ${#dates.format(new java.util.Date(issue.date), 'yyyy-MM-dd')}"
+        ></p>
+        <div th:text="${issue.description}"></div>
+      </div>
+      <hr />
+    </div>
+  </body>
+</html>

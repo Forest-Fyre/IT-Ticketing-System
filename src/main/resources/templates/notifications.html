@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Notifications | TicketingSystem</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="nav__links">
+          <li><a href="/issues">Issues</a></li>
+          <li th:if="${isManager || isIt}">
+            <a href="/ua_issues">Unassigned Issues</a>
+          </li>
+          <li th:if="${isIt}">
+            <a href="/a_issues">Assigned Issues</a>
+          </li>
+          <li><a href="/KB">Knowledge Base</a></li>
+          <li th:if="${isUser}">
+            <a href="/report">Report Issue</a>
+          </li>
+          <li><a href="/homepage">Home</a></li>
+          <li class="active"><a href="/notifications">Notifications</a></li>
+          <li th:if="${isManager}">
+            <a href="/statistics">Statistics</a>
+          </li>
+          <li><a href="/login">Logout</a></li>
+        </ul>
+      </nav>
+      <div class="loggedInAs" th:text="${username}"></div>
+    </header>
+    <div class="center">
+      <h1>Notifications</h1>
+
+      <div th:if="${notiList.isEmpty()}">No notifications available.</div>
+      <div th:unless="${notiList.isEmpty()}">
+        <div class="sameLine mb-2">
+          <div class="w-25">Date:</div>
+          <div class="w-75">Message:</div>
+        </div>
+        <div th:each="notification : ${notiList}" class="sameLine mb-2">
+          <div th:text="${notification.date}" class="w-25"></div>
+          <div th:text="${notification.message}" class="w-75"></div>
+          <div class="w-75">
+            <form action="/Notification_mark_seen" method="post">
+              <input type="hidden" th:name="notificationID" th:value="${notification.notificationID}" />
+              <button type="submit">Seen</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

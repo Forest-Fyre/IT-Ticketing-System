@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Login | TicketingSystem</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header style="color: aliceblue">Issue Ticketing System</header>
+    <div class="center login">
+      <h1 class="mt-0">Login</h1>
+      <span th:if="${error}" 
+        th:text="${error}" 
+        style="color: red;">
+      </span>
+      <form name="f" action="/perform_login" method="POST">
+        <div class="center w-100">
+          <div class="flex-container mb-2">
+            <p class="w-25">User:</p>
+            <input class="w-75" type="text" name="username" maxlength="50" />
+          </div>
+          <div class="flex-container mb-3">
+            <p class="w-25">Password:</p>
+            <input class="w-75" type="password" name="password" maxlength="500" />
+          </div>
+          <div w>
+            <input class="right" name="submit" type="submit" value="submit" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
